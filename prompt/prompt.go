@@ -24,9 +24,10 @@ type Payload struct {
 }
 
 type ToolCall struct {
-	ToolCallID string `json:"id,omitempty"`
-	Name       string `json:"name"`
-	Arguments  []byte `json:"arguments"`
+	ToolCallID       string `json:"id,omitempty"`
+	Name             string `json:"name"`
+	Arguments        []byte `json:"arguments"`
+	ThoughtSignature string `json:"thought_signature,omitempty"`
 }
 type ToolResponse struct {
 	ToolCallID string `json:"id,omitempty"`

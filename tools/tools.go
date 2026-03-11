@@ -71,9 +71,10 @@ type Tool struct {
 }
 
 type Call struct {
-	ID       string `json:"id,omitempty"`
-	Name     string `json:"name"`
-	Argument []byte `json:"argument"`
+	ID               string `json:"id,omitempty"`
+	Name             string `json:"name"`
+	Argument         []byte `json:"argument"`
+	ThoughtSignature string `json:"thought_signature,omitempty"`
 
 	Ref *Tool `json:"-"`
 }

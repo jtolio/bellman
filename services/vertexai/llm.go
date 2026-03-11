@@ -149,10 +149,11 @@ func (g *generator) Stream(prompts ...prompt.Prompt) (<-chan *gen.StreamResponse
 						Role:  prompt.ToolCallRole,
 						Index: candidate.Index,
 						ToolCall: &tools.Call{
-							Name:     f.Name,
-							Argument: arg,
-							ID:       fmt.Sprintf("%d-%d", t, idx),
-							Ref:      model.toolBelt[f.Name],
+							Name:             f.Name,
+							Argument:         arg,
+							ID:               fmt.Sprintf("%d-%d", t, idx),
+							ThoughtSignature: part.ThoughtSignature,
+							Ref:              model.toolBelt[f.Name],
 						},
 					}
 				}
@@ -253,9 +254,10 @@ func (g *generator) Prompt(prompts ...prompt.Prompt) (*gen.Response, error) {
 					return nil, fmt.Errorf("could not marshal google request, %w", err)
 				}
 				res.Tools = append(res.Tools, tools.Call{
-					Name:     f.Name,
-					Argument: arg,
-					Ref:      model.toolBelt[f.Name],
+					ThoughtSignature: p.ThoughtSignature,
+					Name:             f.Name,
+					Argument:         arg,
+					Ref:              model.toolBelt[f.Name],
 				})
 
 			}
@@ -394,7 +396,8 @@ func (g *generator) prompt(prompts ...prompt.Prompt) (*http.Response, genRequest
 				return nil, model, fmt.Errorf("failed to unmarshal tool call arguments: %w", err)
 			}
 			content.Parts = append(content.Parts, genRequestContentPart{
-				FunctionCall: &functionCall{Name: p.ToolCall.Name, Args: jsonArguments},
+				ThoughtSignature: p.ToolCall.ThoughtSignature,
+				FunctionCall:     &functionCall{Name: p.ToolCall.Name, Args: jsonArguments},
 			})
 		default: // prompt.UserRole, prompt.AssistantRole
 			content.Role = "user"

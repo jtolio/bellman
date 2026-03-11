@@ -7,7 +7,8 @@ type genRequestContent struct {
 	Parts []genRequestContentPart `json:"parts,omitempty"`
 }
 type genRequestContentPart struct {
-	Text string `json:"text,omitempty"`
+	Text             string `json:"text,omitempty"`
+	ThoughtSignature string `json:"thoughtSignature,omitempty"`
 
 	InlineData       *inlineData       `json:"inlineData,omitempty"`
 	FileData         *fileData         `json:"fileData,omitempty"`
